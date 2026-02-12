@@ -65,10 +65,13 @@ h1 {
 
 /* Texto introductorio */
 p {
-    max-width: 500px;
-    font-size: 18px;
+    max-width: 500px; /* Se mantiene igual para PC */
+    width: 90%;       /* Asegura que en móvil no toque los bordes físicos */
+    font-size: 18px;  /* Tu tamaño original */
     line-height: 1.6;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    text-shadow: 0 2px 6px rgba(0,0,0,0.35); /* Tu sombra original */
+    margin: 0 auto 25px auto; /* Centra el bloque y separa de la pregunta */
+    transition: all 0.3s ease;
 }
 
 /* Botones generales */
@@ -141,6 +144,15 @@ button {
         opacity: 0;
     }
 }
+
+/* Solo para celulares (pantallas de menos de 480px de ancho) */
+@media (max-width: 480px) {
+    p {
+        font-size: 15px;  /* Reducimos un poco para que quepan más palabras por línea */
+        line-height: 1.4; /* Menos espacio entre líneas para que se vea compacto */
+        width: 95%;       /* Aprovechamos más el ancho del celular */
+    }
+}
 </style>
 </head>
 
@@ -153,13 +165,13 @@ button {
 </audio>
 
 <div class="screen" id="startScreen">
-    <button onclick="startExperience()">Presioname 💫</button>
+    <button onclick="startExperience()">Tap here 💫</button>
 </div>
 
 <div class="screen hidden" id="mainScreen">
     <p>
-        Some stories just wait for the clock to strike right…<br>
-        and I'd like to think the story is worth telling.
+        Some stories wait for the clock to strike right…<br>
+        and I'd like to think ours is worth telling.
     </p>
 
     <h1>Dani will you be my Valentine?</h1>
