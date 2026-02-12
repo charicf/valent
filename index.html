@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine 💕</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    background: url('background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #7a4e4e; /* blanco cálido */
+}
+
+/* Para celular */
+@media (max-width: 768px) {
+    body {
+        background: url('background-cel.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
+}
+
+/* Capa muy ligera para mejorar lectura */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.03);
+}
+
+/* Pantallas */
+.screen {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    transform: scale(1.02);
+}
+
+/* Título principal */
+h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    font-weight: 500;
+    margin: 20px 0;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* Texto introductorio */
+p {
+    max-width: 500px;
+    font-size: 18px;
+    line-height: 1.6;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.35);
+}
+
+/* Botones generales */
+button {
+    padding: 12px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin: 12px;
+    transition: all 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Botón YES – verde esperanza elegante */
+.yes {
+    background-color: #7fa887;
+    color: white;
+}
+
+.yes:hover {
+    transform: scale(1.07);
+}
+
+/* Botón NO – rojo apagado nostálgico */
+.no {
+    background-color: #b65c5c;
+    color: white;
+    position: relative;
+}
+
+@keyframes fadeInSoft {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#message {
+    margin-top: 20px;
+    font-size: 24px;
+    font-family: 'Cormorant Garamond', serif;
+    opacity: 0;
+    transition: opacity 1.2s ease, transform 1.2s ease;
+    transform: translateY(10px);
+}
+
+.sparkle {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.8;
+    animation: sparkleAnim 1.8s ease-out forwards;
+}
+
+@keyframes sparkleAnim {
+    0% {
+        transform: scale(0.5) translateY(0);
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(1.5) translateY(-80px);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<audio id="bgMusic" loop>
+    <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<div class="screen" id="startScreen">
+    <button onclick="startExperience()">Tap here 💫</button>
+</div>
+
+<div class="screen hidden" id="mainScreen">
+    <p>
+        Some stories don’t end…<br>
+        they just wait for the right moment to continue.
+    </p>
+
+    <h1>Will you be my Valentine?</h1>
+
+    <div>
+        <button class="yes" onclick="sayYes()">Yes 💚</button>
+        <button class="no" id="noBtn" onclick="moveNo()">No ❤️</button>
+    </div>
+
+    <div id="message"></div>
+</div>
+
+<script>
+let noScale = 1;
+
+function startExperience() {
+    document.getElementById("startScreen").classList.add("hidden");
+    document.getElementById("mainScreen").classList.remove("hidden");
+    document.getElementById("bgMusic").play();
+}
+
+function moveNo() {
+    const btn = document.getElementById("noBtn");
+    const maxX = window.innerWidth - btn.offsetWidth;
+    const maxY = window.innerHeight - btn.offsetHeight;
+
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+
+    btn.style.position = "absolute";
+    btn.style.left = randomX + "px";
+    btn.style.top = randomY + "px";
+
+    noScale -= 0.08;
+    if (noScale > 0.4) {
+        btn.style.transform = `scale(${noScale})`;
+    }
+}
+
+function sayYes() {
+    const msg = document.getElementById("message");
+
+    msg.innerHTML = "Maybe this is our right moment 🤍";
+
+    msg.style.opacity = "0";
+    msg.style.transform = "translateY(10px)";
+
+    setTimeout(() => {
+        msg.style.opacity = "1";
+        msg.style.transform = "translateY(0)";
+    }, 100);
+
+    const noBtn = document.getElementById("noBtn");
+    noBtn.style.transition = "opacity 1s ease";
+    noBtn.style.opacity = "0";
+
+    createSparkles(); // ✨ magia aquí
+}
+
+function createSparkles() {
+    for (let i = 0; i < 25; i++) {
+        const sparkle = document.createElement("div");
+        sparkle.classList.add("sparkle");
+
+        sparkle.style.left = Math.random() * window.innerWidth + "px";
+        sparkle.style.top = Math.random() * window.innerHeight + "px";
+
+        document.body.appendChild(sparkle);
+
+        setTimeout(() => {
+            sparkle.remove();
+        }, 1800);
+    }
+}
+</script>
+
+</body>
+</html>
